@@ -16,7 +16,7 @@
 
 'use strict';
 
-var DEFAULT_URL = 'compressed.tracemonkey-pldi-09.pdf';
+var DEFAULT_URL = "PDFJS_DEFAULT_URL" in window ? window["PDFJS_DEFAULT_URL"] : '';
 
 if (typeof PDFJSDev !== 'undefined' && PDFJSDev.test('CHROME')) {
   (function rewriteUrlClosure() {
@@ -24,6 +24,7 @@ if (typeof PDFJSDev !== 'undefined' && PDFJSDev.test('CHROME')) {
     // is rewritten as soon as possible.
     var queryString = document.location.search.slice(1);
     var m = /(^|&)file=([^&]*)/.exec(queryString);
+    if(!DEFAULT_URL)
     DEFAULT_URL = m ? decodeURIComponent(m[2]) : '';
 
     // Example: chrome-extension://.../http://example.com/file.pdf
